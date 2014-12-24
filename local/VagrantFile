@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+
+			
+	config.vm.define :trail do |trail|
+		trail.vm.hostname = "com.paxcel"
+		trail.vm.box = "ubuntu"
+		trail.vm.box_url = "http://download.appscale.com/download/AppScale%201.12.0%20VirtualBox%20Image"
+						
+		trail.vm.network :private_network, ip: "192.168.111.2"
+						
+		trail.vm.provision "puppet" do |trail|
+		trail.manifests_path = "../manifests"
+		trail.manifest_file = "../manifests/1.pp"
+		trail.module_path = "../modules"
+		end		
+		
+			
+				
+		trail.vm.provider "virtualbox" do |prov|
+				prov.customize ["modifyvm", :id, "--memory", "512"]
+				prov.customize ["modifyvm", :id, "--cpuexecutioncap", "30"]
+							end
+	
+end
+			
+	config.vm.define :trailvm do |trailvm|
+		trailvm.vm.hostname = "com.paxcel"
+		trailvm.vm.box = "ubuntu"
+		trailvm.vm.box_url = "http://download.appscale.com/download/AppScale%201.12.0%20VirtualBox%20Image"
+						
+		trailvm.vm.network :private_network, ip: "192.168.111.3"
+						
+		trailvm.vm.provision "puppet" do |trailvm|
+		trailvm.manifests_path = "../manifests"
+		trailvm.manifest_file = "../manifests/1.pp"
+		trailvm.module_path = "../modules"
+		end		
+		
+			
+				
+		trailvm.vm.provider "virtualbox" do |prov|
+				prov.customize ["modifyvm", :id, "--memory", "512"]
+				prov.customize ["modifyvm", :id, "--cpuexecutioncap", "30"]
+							end
+	
+end
+end
